@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tabindex</title>
+</head>
+
+<body>
+    <!-- Tab index can be applied to any HTML element -->
+    <!--it takes a range of numeric values -->
+
+    <div tabindex="-1" id="example1"></div>
+    <!--Not in the natural tab order-->
+    <!--Can be programmatically focused with focus() method-->
+    <script>
+        document.querySelector('#example1').focus();
+    </script>
+
+
+    <div tabindex="0" id="example2"></div>
+    <!-- In the natural tab order -->
+    <!-- Can be programmatically focused -->
+
+    <div tabindex="1" id="example3"></div>
+    <!--tabindex greater than 0 will jump to the front of the tab order-->
+    <!--Anti-pattern-->
+
+</body>
+
+</html>
