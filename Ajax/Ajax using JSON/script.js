@@ -3,7 +3,6 @@
     let print_btn = document.querySelector('.print-ajax-btn');
     let data_zone = document.querySelector('.data-zone');
     let data_url = 'data.json';
-    // let data_url = 'https://randomuser.me/api/?results=10';
 
     // Request
     let renderAjaxData = () => {
@@ -69,7 +68,6 @@
                     <td class="td etc"></td>
                 </tr>
             `;
-
         });
 
         printTemplate += `</tbody></table>`;
