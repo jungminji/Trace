@@ -117,3 +117,23 @@
 })(window, window.document, window.jQuery);
 
 // jQuery.noConflict(true);
+
+// Here missing part
+
+
+(function (window, document, $) {
+    'use strict';
+
+    var $box = $('.box');
+
+    var toggleBox = function toggleBox() {
+        if ($box.hasClass('hide')) {
+            $box.removeClass('hide');
+        }
+    };
+
+    // Toggle
+    $box.addClass('hide');
+
+    $('.toggle-box').on('click', toggleBox);
+})(window, window.document, window.jQuery);

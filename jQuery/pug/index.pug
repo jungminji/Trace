@@ -15,7 +15,7 @@ head
                 'use strict';
                 console.log('DOM is ready');
                 
-                $('body').children().attr('class', 'body-children');
+                //- $('body').children().attr('class', 'body-children');
 
             })(window, window.jQuery);    
         })
@@ -25,6 +25,7 @@ body
             .column.is-12.main
                 h1.title.is-1 Hi jQuery : )
                 p.subtitle.is-4 write less do more.
+                button.button.is-primary.toggle-box(type="button") Toggle <code>.box</code>.
         .columns
             .column.is-6.is-offset-3
                 p.box Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea temporibus eveniet, debitis quibusdam illum hic vero distinctio officia doloribus iste accusamus consequuntur atque alias natus ab itaque possimus molestias minus.

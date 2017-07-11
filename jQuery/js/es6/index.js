@@ -4,7 +4,7 @@
 
     // jQuery holdReady()
 
-    $.holdReady(true);  // Prevent executing $(document).ready function
+    $.holdReady(true); // Prevent executing $(document).ready function
 
     let id = `f0etn`;
     let url = `https://api.myjson.com/bins/${id}`;
@@ -111,17 +111,38 @@
 
     // CSS and data-
     let $div = $('<div/>', {
-        'class': 'example',
-        'on': {
-            'click': e => $(e.target).remove(),
-            'mouseenter': e => $(e.target).css('background-color','hsla(249.7, 100%, 65.9%, 0.7)'),
-            'mouseleave': e => $(e.target).css('background-color', $div.data('original-dim-bg'))
-        }
-    })
-    .prependTo($body);
+            'class': 'example',
+            'on': {
+                'click': e => $(e.target).remove(),
+                'mouseenter': e => $(e.target).css('background-color', 'hsla(249.7, 100%, 65.9%, 0.7)'),
+                'mouseleave': e => $(e.target).css('background-color', $div.data('original-dim-bg'))
+            }
+        })
+        .prependTo($body);
 
     $div.data('original-dim-bg', $div.css('background-color'))
 
 })(window, window.document, window.jQuery);
 
 // jQuery.noConflict(true);
+
+// Here missing part
+
+
+((window, document, $) => {
+    'use strict';
+
+    let $box = $('.box');
+
+    let toggleBox = function () {
+        if ($box.hasClass('hide')) {
+            $box.removeClass('hide');
+        }
+    };
+
+    // Toggle
+    $box.addClass('hide');
+
+    $('.toggle-box').on('click', toggleBox);
+
+})(window, window.document, window.jQuery);
