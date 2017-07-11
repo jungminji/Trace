@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title jquery Practice
+    link(rel="stylesheet", href="/node_modules/bulma/css/bulma.css")
+    link(rel="stylesheet", href="./css/main.css")
+    script(src="https://unpkg.com/jquery")
+    script.
+        $(() => {
+            // When document is ready, execute this callback function
+            ((global, $) => {
+                'use strict';
+                
+                $('body').children().attr('class', 'body-children');
+
+            })(window, window.jQuery);    
+        })
+body
+    .app.container
+        .columns
+            .column.is-12.main
+                h1.title.is-1 Hi jQuery : )
+                p.subtitle.is-4 write less do more.
+        .columns
+            .column.is-6.is-offset-3
+                p.box Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea temporibus eveniet, debitis quibusdam illum hic vero distinctio officia doloribus iste accusamus consequuntur atque alias natus ab itaque possimus molestias minus.
+                p.box Qui quasi iste voluptatibus fugit nam expedita nisi inventore? Itaque neque harum necessitatibus nisi vel sint ex impedit ut consequuntur tenetur, commodi aut incidunt atque modi. Quae, officiis labore veniam.
+                p.box Accusantium veritatis deleniti nesciunt aliquid ratione nisi, totam sunt tempore error obcaecati voluptatum odio nulla quis quaerat hic aspernatur architecto quo ab molestiae repudiandae dolor quasi mollitia deserunt! Fugit, dignissimos.
+                p.box Deserunt, rem officiis provident sit vitae ex. Perspiciatis laborum vitae, error sapiente maxime voluptatibus debitis tenetur suscipit doloribus assumenda ex, nam aspernatur cupiditate odit a excepturi vel rerum velit autem!
+                p.box Inventore, quis nemo ducimus iure vero. Eligendi vero accusantium magni, necessitatibus quasi voluptate eius ut repellendus animi facilis illo, quod nesciunt omnis expedita unde dolorem aspernatur voluptates cumque ea nulla.
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+                p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
+
+
+    //- script(src="/node_modules/jquery/dist/jquery.min.js")
+    script(src="./js/index.js")

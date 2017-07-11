@@ -1,0 +1,27 @@
+{
+  "name": "jquery-practice",
+  "version": "0.0.1",
+  "description": "jQuery project folder",
+  "scripts": {
+    "dev": "node_modules/.bin/npm-run-all --parallel --continue-on-error pug sass babel serve",
+    "serve": "node_modules/.bin/live-server --port=3001 --cors",
+    "pug": "node_modules/.bin/pug ./pug -w --out ./",
+    "sass": "node_modules/.bin/node-sass -wr --output-style compressed -o ./css --source-map true --source-map-contents ./sass",
+    "babel": "node_modules/.bin/babel -w ./js/es6 -d ./js"
+  },
+  "dependencies": {
+    "bulma": "^0.4.3",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "live-server": "^1.2.0",
+    "node-sass": "^4.5.3",
+    "npm-run-all": "^4.0.2",
+    "pug-cli": "^1.0.0-alpha6"
+  },
+  "babel": {
+    "presets": ["env"]
+  }
+}
