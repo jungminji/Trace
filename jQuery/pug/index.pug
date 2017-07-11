@@ -21,31 +21,14 @@ head
         })
 body
 
-    -
-        var accordion_data = {
-            labels : ['General', 'Administration'],
-            contents : [
-                ['Dashboard', 'Customers'],
-                ['Team Settings', 'Manage Your Team']
-                ]
-            }
-
-    mixin accordion(data)
-        each label in accordion_data.labels
-            h4.menu-label
-                a.box(href="#")= label
-            ul.menu-list
-                each content in accordion_data.contents
-                    li
-                        each link in content
-                            a(href="#")= link
+    include ./mixin.pug
 
     .app.container
         .columns
             .column.is-12.main
                 h1.title.is-1 Hi jQuery : )
                 p.subtitle.is-4 write less do more.
-                button.button.is-primary.toggle-box(type="button") Toggle <code>.box</code>.
+                button.button.is-primary.toggle-box(type="button") <code>.box</code>
         .columns
             .column.is-6
                 p.box Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea temporibus eveniet, debitis quibusdam illum hic vero distinctio officia doloribus iste accusamus consequuntur atque alias natus ab itaque possimus molestias minus.

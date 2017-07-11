@@ -16,8 +16,6 @@
 
 })(window, window.jQuery);
 
-
-
 ((window, $) => {
 
     'use strict';
@@ -52,16 +50,6 @@
     let $main = $('.main');
 
     $(window).on('scroll', function () {
-        // let offset = this.scrollY || this.scrollTop;
-        // let $main = $('.main');
-
-        // if (offset > 123) {
-        //     $main.addClass('is-fixed');
-        // } else {
-        //     $main.removeClass('is-fixed');
-        // }
-
-
         this.scrollTop() > 123 ?
             $main.addClass('is-fixed') :
             $main.removeClass('is-fixed');
