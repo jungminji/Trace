@@ -12,14 +12,34 @@ head
         $(() => {
             // When document is ready, execute this callback function
             ((global, $) => {
-                'use strict';
-                console.log('DOM is ready');
+                "use strict";
+                console.log("DOM is ready");
                 
-                //- $('body').children().attr('class', 'body-children');
+                //- $("body").children().attr("class", "body-children");
 
             })(window, window.jQuery);    
         })
 body
+
+    -
+        var accordion_data = {
+            labels : ['General', 'Administration'],
+            contents : [
+                ['Dashboard', 'Customers'],
+                ['Team Settings', 'Manage Your Team']
+                ]
+            }
+
+    mixin accordion(data)
+        each label in accordion_data.labels
+            h4.menu-label
+                a.box(href="#")= label
+            ul.menu-list
+                each content in accordion_data.contents
+                    li
+                        each link in content
+                            a(href="#")= link
+
     .app.container
         .columns
             .column.is-12.main
@@ -27,7 +47,7 @@ body
                 p.subtitle.is-4 write less do more.
                 button.button.is-primary.toggle-box(type="button") Toggle <code>.box</code>.
         .columns
-            .column.is-6.is-offset-3
+            .column.is-6
                 p.box Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea temporibus eveniet, debitis quibusdam illum hic vero distinctio officia doloribus iste accusamus consequuntur atque alias natus ab itaque possimus molestias minus.
                 p.box Qui quasi iste voluptatibus fugit nam expedita nisi inventore? Itaque neque harum necessitatibus nisi vel sint ex impedit ut consequuntur tenetur, commodi aut incidunt atque modi. Quae, officiis labore veniam.
                 p.box Accusantium veritatis deleniti nesciunt aliquid ratione nisi, totam sunt tempore error obcaecati voluptatum odio nulla quis quaerat hic aspernatur architecto quo ab molestiae repudiandae dolor quasi mollitia deserunt! Fugit, dignissimos.
@@ -39,7 +59,15 @@ body
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
-
+            .column.is-6
+                article.ui-accordion.menu.box
+                    +accordion(accordion_data)
+                    +accordion(accordion_data)
+                    +accordion(accordion_data)
+                    +accordion(accordion_data)
+                
+        
+                    
 
     //- script(src="/node_modules/jquery/dist/jquery.min.js")
     script(src="./js/index.js")

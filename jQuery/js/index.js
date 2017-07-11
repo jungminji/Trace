@@ -118,8 +118,23 @@
 
 // jQuery.noConflict(true);
 
-// Here missing part
+// addClass, Array maps
+(function (window, document, $) {
+    'use strict';
 
+    $('.app').addClass(function (index, name) {
+        var names = name.split(' ');
+        console.log(names); // ["app", "container"]
+
+        var converted = names.map(function (name) {
+            return '*-' + name + '-*';
+        });
+
+        converted = converted.join(' ');
+
+        return converted;
+    });
+})(window, window.document, window.jQuery);
 
 (function (window, document, $) {
     'use strict';
@@ -136,4 +151,41 @@
     $box.addClass('hide');
 
     $('.toggle-box').on('click', toggleBox);
+})(window, window.document, window.jQuery);
+
+(function (window, document, $) {
+    'use strict';
+
+    var $component = void 0;
+
+    // Component Accordion
+    function init() {
+        $component = $('.ui-accordion');
+        var $lists = $component.find('.menu-list');
+
+        // Hide except the first one
+        $lists.filter(function (index) {
+            return index > 0;
+        }).hide();
+
+        eventBind();
+    }
+
+    function eventBind() {
+        $('.menu-label a', $component).on('click', function (e) {
+            e.preventDefault();
+            var animation_duration = 500;
+            var $list = $(e.target).parent().next();
+
+            if ($list.css('display') === 'none') if ($list.is(':visible')) {
+                $list.hide(animation_duration);
+                $(this).removeClass('is-active');
+            } else {
+                $list.show(animation_duration);
+                $(this).addClass('is-active');
+            }
+        });
+    }
+
+    init();
 })(window, window.document, window.jQuery);
