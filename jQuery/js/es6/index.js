@@ -2,10 +2,17 @@
 
     'use strict';
 
+    // jQuery holdReady()
+
+    $.holdReady(true);  // Prevent executing $(document).ready function
+
     let id = `f0etn`;
     let url = `https://api.myjson.com/bins/${id}`;
 
-    $.get(url).then(data => console.log(data));
+    $.get(url).then(data => {
+        console.log("Ajax Data Get");
+        $.holdReady(false); // Executes $(document).ready function
+    });
 
 })(window, window.jQuery);
 
