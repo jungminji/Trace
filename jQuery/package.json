@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "node_modules/.bin/npm-run-all --parallel --continue-on-error pug sass babel serve",
     "serve": "node_modules/.bin/live-server --port=3001 --cors",
-    "pug": "node_modules/.bin/pug ./pug -w --out ./",
-    "sass": "node_modules/.bin/node-sass -wr --output-style compressed -o ./css --source-map true --source-map-contents ./sass",
-    "babel": "node_modules/.bin/babel -w ./js/es6 -d ./js"
+    "pug": "node_modules/.bin/pug ./src/pug -w --out ./dist",
+    "sass": "node_modules/.bin/node-sass -wr --output-style compressed -o ./dist/css/ --source-map true --source-map-contents ./src/sass",
+    "babel": "node_modules/.bin/babel -w ./src/js/es6 -d ./dist//js"
   },
   "dependencies": {
     "bulma": "^0.4.3",
