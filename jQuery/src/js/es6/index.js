@@ -133,61 +133,81 @@
 })(window, window.document, window.jQuery);
 
 
-
-((window, document, $) => {
+(($) => {
     'use strict';
 
-    let $box = $('.box');
-
-    let toggleBox = function () {
-        if ($box.hasClass('hide')) {
-            $box.removeClass('hide');
+    if (!$.random) {
+        jQuery.random = function (n) {
+            return Math.floor(Math.random() * n);
         }
-    };
+    }
 
-    // Toggle
-    $box.addClass('hide');
-
-    $('.toggle-box').on('click', toggleBox);
-
-})(window, window.document, window.jQuery);
+})(window.jQuery);
 
 
 ((window, document, $) => {
-    'use strict'
 
-    let $component;
+    'use strict';
 
-    // Component Accordion
+    let $component,
+        $lists,
+        $labels,
+        time = 300,
+        isMultiToggle = false;
+
     function init() {
+
         $component = $('.ui-accordion');
-        let $lists = $component.find('.menu-list');
+        $lists = $component.find('.menu-list');
+        $labels = $('.menu-label a', $component);
 
-        // Hide except the first one
-        $lists.filter((index) => {
-            return index > 0
-        }).hide();
+        bind();
 
-        eventBind();
+        $lists.hide();
+        $labels.eq($.random($labels.length)).trigger('click');
     }
 
-    function eventBind() {
-        $('.menu-label a', $component).on('click', function (e) {
-            e.preventDefault();
-            let animation_duration = 500;
-            let $list = $(e.target).parent().next();
+    function bind() {
+        $labels.on('click', isMultiToggle ? toggleList : toggleSingleList);
+    }
 
-            if ($list.css('display') === 'none')
-                if ($list.is(':visible')) {
-                    $list.hide(animation_duration);
-                    $(this).removeClass('is-active');
-                } else {
-                    $list.show(animation_duration);
-                    $(this).addClass('is-active');
-                }
-        });
+    function toggleList(e) {
+        e.preventDefault();
+        let $this = $(e.target);
+        let $list = $this.parent().next();
+
+        $list.toggle(time);
+        $this.toggleClass('is-active');
+    }
+
+    function toggleSingleList(e) {
+        e.preventDefault();
+        let $this = $(e.target);
+        let $list = $this.parent().next();
+
+        // UI/UX: Just to make cursor to be default
+        $this.css('cursor', 'default');
+
+        if ($this.hasClass('is-active')) {
+            $this.effect('bounce', {
+                times: 2
+            }, 150);
+            return;
+        }
+        $labels.filter('.is-active').removeClass('is-active');
+        $lists.filter(':visible').hide(time);
+        $this.addClass('is-active');
+        $list.show(time);
     }
 
     init();
 
+
 })(window, window.document, window.jQuery);
+
+((window, document, $) => {
+    'use strict';
+
+
+
+})(window, window.document, window.jQuery)

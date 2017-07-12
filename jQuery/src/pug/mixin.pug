@@ -1,18 +1,25 @@
 -
-    var accordion_data = {
-        labels : ['General', 'Administration'],
-        contents : [
-            ['Dashboard', 'Customers'],
-            ['Team Settings', 'Manage Your Team']
-            ]
-        }
+  var accordion_data = {
+    'general': [
+      {'content': 'dashboard', 'href': '#dashboard'},
+      {'content': 'customers', 'href': '#customers'}
+    ],
+    'administration': [
+      {'content': 'team settings', 'href': '#team-settings'},
+      {'content': 'manage your team', 'href': '#manage-your-team'},
+      {'content': 'authentication', 'href': '#authentication'}
+    ],
+    'invitations': [
+      {'content': 'cloud storage environment settings', 'href': '#cloud-storage-environment-settings'},
+    ]
+  }
 
 mixin accordion(data)
-    each label in accordion_data.labels
-        h4.menu-label
-            a.box(href="#")= label
-        ul.menu-list
-            each content in accordion_data.contents
-                li
-                    each link in content
-                        a(href="#")= link
+  article.ui-accordion.menu.box
+    each links, label in data
+      h4.menu-label
+        a.box(href)= label
+      ul.menu-list
+        each link in links
+          li
+            a(href=link.href)= link.content

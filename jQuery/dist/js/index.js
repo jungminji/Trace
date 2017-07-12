@@ -126,56 +126,74 @@
     });
 })(window, window.document, window.jQuery);
 
-(function (window, document, $) {
+(function ($) {
     'use strict';
 
-    var $box = $('.box');
+    if (!$.random) {
+        jQuery.random = function (n) {
+            return Math.floor(Math.random() * n);
+        };
+    }
+})(window.jQuery);
 
-    var toggleBox = function toggleBox() {
-        if ($box.hasClass('hide')) {
-            $box.removeClass('hide');
+(function (window, document, $) {
+
+    'use strict';
+
+    var $component = void 0,
+        $lists = void 0,
+        $labels = void 0,
+        time = 300,
+        isMultiToggle = false;
+
+    function init() {
+
+        $component = $('.ui-accordion');
+        $lists = $component.find('.menu-list');
+        $labels = $('.menu-label a', $component);
+
+        bind();
+
+        $lists.hide();
+        $labels.eq($.random($labels.length)).trigger('click');
+    }
+
+    function bind() {
+        $labels.on('click', isMultiToggle ? toggleList : toggleSingleList);
+    }
+
+    function toggleList(e) {
+        e.preventDefault();
+        var $this = $(e.target);
+        var $list = $this.parent().next();
+
+        $list.toggle(time);
+        $this.toggleClass('is-active');
+    }
+
+    function toggleSingleList(e) {
+        e.preventDefault();
+        var $this = $(e.target);
+        var $list = $this.parent().next();
+
+        // UI/UX: Just to make cursor to be default
+        $this.css('cursor', 'default');
+
+        if ($this.hasClass('is-active')) {
+            $this.effect('bounce', {
+                times: 2
+            }, 150);
+            return;
         }
-    };
+        $labels.filter('.is-active').removeClass('is-active');
+        $lists.filter(':visible').hide(time);
+        $this.addClass('is-active');
+        $list.show(time);
+    }
 
-    // Toggle
-    $box.addClass('hide');
-
-    $('.toggle-box').on('click', toggleBox);
+    init();
 })(window, window.document, window.jQuery);
 
 (function (window, document, $) {
     'use strict';
-
-    var $component = void 0;
-
-    // Component Accordion
-    function init() {
-        $component = $('.ui-accordion');
-        var $lists = $component.find('.menu-list');
-
-        // Hide except the first one
-        $lists.filter(function (index) {
-            return index > 0;
-        }).hide();
-
-        eventBind();
-    }
-
-    function eventBind() {
-        $('.menu-label a', $component).on('click', function (e) {
-            e.preventDefault();
-            var animation_duration = 500;
-            var $list = $(e.target).parent().next();
-
-            if ($list.css('display') === 'none') if ($list.is(':visible')) {
-                $list.hide(animation_duration);
-                $(this).removeClass('is-active');
-            } else {
-                $list.show(animation_duration);
-                $(this).addClass('is-active');
-            }
-        });
-    }
-
-    init();
 })(window, window.document, window.jQuery);
