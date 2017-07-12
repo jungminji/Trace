@@ -67,9 +67,9 @@
     // Element node
     let $body = $(document.body);
     let styleMap = {
-        'font-size': '32px',
+        'font-size': '14px',
         'margin-bottom': '+=20px',
-        'background': 'url("//placehold.it/1920x1080") left top \/ cover no-repeat'
+        'background': 'url("http://images.all-free-download.com/images/graphicthumb/seamless_floral_background_vector_148132.jpg") left top'
     };
     $body.css(styleMap);
 
@@ -133,13 +133,16 @@
 })(window, window.document, window.jQuery);
 
 
+// Extending jQuery Library
 (($) => {
     'use strict';
 
     if (!$.random) {
-        jQuery.random = function (n) {
-            return Math.floor(Math.random() * n);
-        }
+        $.random = n => Math.floor(Math.random() * n);
+    }
+
+    if (!$.cache) {
+        $.cache = el => $.data(el, '$') || $.data(el, '$', $(el)); // Set data
     }
 
 })(window.jQuery);
@@ -182,8 +185,11 @@
 
     function toggleSingleList(e) {
         e.preventDefault();
-        let $this = $(e.target);
+
+        let $this = $.cache(e.target);
         let $list = $this.parent().next();
+
+        // console.log($this instanceof $);
 
         // UI/UX: Just to make cursor to be default
         $this.css('cursor', 'default');
@@ -191,7 +197,7 @@
         if ($this.hasClass('is-active')) {
             $this.effect('bounce', {
                 times: 2
-            }, 150);
+            }, time);
             return;
         }
         $labels.filter('.is-active').removeClass('is-active');
@@ -205,9 +211,55 @@
 
 })(window, window.document, window.jQuery);
 
+
+// Notification
 ((window, document, $) => {
     'use strict';
 
+    let $deleteBtn = $('.delete');
+    $deleteBtn.hide();
+
+    $deleteBtn.parent().on('mouseenter', function () {
+        $(this).children().filter('.delete').show('slow');
+    });
+
+    $deleteBtn.parent().on('mouseleave', function () {
+        $(this).children().filter('.delete').hide('hide');
+    });
+
+
+
+    $deleteBtn.on('click', function () {
+        $(this).parent().fadeOut(300, function(){
+            $(this).remove();
+        });
+    });
 
 
 })(window, window.document, window.jQuery)
+
+
+// Class for notification
+class Notification {
+    constructor(selector) {
+        if ($.type(selector) !== 'string') {
+            throw 'You must pass CSS selector';
+        }
+        if (selector.trim() === '') {
+            throw 'You have passed an Empty arguments';
+        }
+        if (!this) {
+            throw 'new ... um is this necessary?';
+        }
+
+        this.$elements = $(selector);
+        this.$elements.each(index => {
+            let $el = this.$elements.eq(index);
+            $el.find('.delete').on('click', this.close.bind($el));
+        })
+    }
+
+    close(){
+        $(this).remove();
+    }
+}

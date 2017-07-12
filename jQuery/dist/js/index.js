@@ -1,5 +1,9 @@
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 (function (window, $) {
 
     'use strict';
@@ -59,9 +63,9 @@
 
     var $body = $(document.body);
     var styleMap = {
-        'font-size': '32px',
+        'font-size': '14px',
         'margin-bottom': '+=20px',
-        'background': 'url("//placehold.it/1920x1080") left top \/ cover no-repeat'
+        'background': 'url("http://images.all-free-download.com/images/graphicthumb/seamless_floral_background_vector_148132.jpg") left top'
     };
     $body.css(styleMap);
 
@@ -126,13 +130,20 @@
     });
 })(window, window.document, window.jQuery);
 
+// Extending jQuery Library
 (function ($) {
     'use strict';
 
     if (!$.random) {
-        jQuery.random = function (n) {
+        $.random = function (n) {
             return Math.floor(Math.random() * n);
         };
+    }
+
+    if (!$.cache) {
+        $.cache = function (el) {
+            return $.data(el, '$') || $.data(el, '$', $(el));
+        }; // Set data
     }
 })(window.jQuery);
 
@@ -173,8 +184,11 @@
 
     function toggleSingleList(e) {
         e.preventDefault();
-        var $this = $(e.target);
+
+        var $this = $.cache(e.target);
         var $list = $this.parent().next();
+
+        // console.log($this instanceof $);
 
         // UI/UX: Just to make cursor to be default
         $this.css('cursor', 'default');
@@ -182,7 +196,7 @@
         if ($this.hasClass('is-active')) {
             $this.effect('bounce', {
                 times: 2
-            }, 150);
+            }, time);
             return;
         }
         $labels.filter('.is-active').removeClass('is-active');
@@ -194,6 +208,59 @@
     init();
 })(window, window.document, window.jQuery);
 
+// Notification
 (function (window, document, $) {
     'use strict';
+
+    var $deleteBtn = $('.delete');
+    $deleteBtn.hide();
+
+    $deleteBtn.parent().on('mouseenter', function () {
+        $(this).children().filter('.delete').show('slow');
+    });
+
+    $deleteBtn.parent().on('mouseleave', function () {
+        $(this).children().filter('.delete').hide('hide');
+    });
+
+    $deleteBtn.on('click', function () {
+        $(this).parent().fadeOut(300, function () {
+            $(this).remove();
+        });
+    });
 })(window, window.document, window.jQuery);
+
+// Class for notification
+
+var Notification = function () {
+    function Notification(selector) {
+        var _this = this;
+
+        _classCallCheck(this, Notification);
+
+        if ($.type(selector) !== 'string') {
+            throw 'You must pass CSS selector';
+        }
+        if (selector.trim() === '') {
+            throw 'You have passed an Empty arguments';
+        }
+        if (!this) {
+            throw 'new ... um is this necessary?';
+        }
+
+        this.$elements = $(selector);
+        this.$elements.each(function (index) {
+            var $el = _this.$elements.eq(index);
+            $el.find('.delete').on('click', _this.close.bind($el));
+        });
+    }
+
+    _createClass(Notification, [{
+        key: 'close',
+        value: function close() {
+            $(this).remove();
+        }
+    }]);
+
+    return Notification;
+}();

@@ -23,3 +23,8 @@ mixin accordion(data)
         each link in links
           li
             a(href=link.href)= link.content
+
+mixin notification()
+    .notification.is-primary
+        button(type="button" aria-label="close-notification").delete
+        block
