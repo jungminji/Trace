@@ -216,7 +216,7 @@
 ((window, document, $) => {
     'use strict';
 
-    let $deleteBtn = $('.delete');
+    let $deleteBtn = $('.notification .delete');
     $deleteBtn.hide();
 
     $deleteBtn.parent().on('mouseenter', function () {
@@ -230,36 +230,146 @@
 
 
     $deleteBtn.on('click', function () {
-        $(this).parent().fadeOut(300, function(){
+        $(this).parent().fadeOut(300, function () {
             $(this).remove();
         });
     });
 
 
+})(window, window.document, window.jQuery);
+
+
+
+
+
+// Modal Control
+// ((window, document, $) => {
+//     'use strict';
+
+//     let $target = $('.show-modal');
+//     let $modal = $('.modal');
+
+//     $target.on('click', function (e) {
+//         $modal.addClass('is-active');
+//     });
+
+//     $modal.on('click', function (e) {
+//         let $btn = $(e.target);
+
+//         if ($btn.is('.delete') ||
+//             $btn.is('.modal-background') ||
+//             $btn.is('.is-danger')) {
+
+//             close();
+//         }
+//     });
+
+//     function close() {
+//         $modal.removeClass('is-active');
+//     }
+
+
+// })(window, window.document, window.jQuery)
+
+// Modal Control, Class
+
+((window, document, $) => {
+    'use strict';
+
+    class Modal {
+        constructor(selector, trigger) {
+            this.$node = $(selector);
+            this.$btn = $(trigger);
+
+            // When you trigger the event in js, 'this' will become its event target -> $btn, so bind to class instance again.
+            this.$btn.on('click', this.open.bind(this));
+            this.$node.find('.delete, .modal-background, .is-danger').on('click', this.close.bind(this));
+        }
+
+        open() {
+            this.$node.addClass('is-active');
+        }
+
+        close() {
+            this.$node.removeClass('is-active');
+        }
+    }
+
+    let modalInit = new Modal('.modal', '.show-modal');
+
+})(window, window.document, window.jQuery);
+
+
+// Media Object js template
+((window, document, $) => {
+    'use strict'
+
+    let imgURL = `https://api.myjson.com/bins/f0etn`;
+    let dataset;
+
+    // Limits the number of data
+    function limitTo(data, n) {
+        return data.slice(0, n);
+    }
+
+    $.get(imgURL).then(data => {
+        dataset = limitTo(data, 5);
+        render(dataset);
+    });
+
+    function render(data) {
+
+        let template;
+
+        data.forEach(item => {
+            let id = item.id.replace(/-/g, '');
+            let name = `${item.firstName} ${item.lastName}`;
+            let image = item.image;
+            let bio = item.bio;
+
+            template += `<article class="media box">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <img src="${image}">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>${name}</strong> <small>@${id}</small> <small>31m</small>
+                            <br>
+                            ${bio}
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item">
+                                <span class="icon is-small"><i class="fa fa-reply"></i></span>
+                            </a>
+                            <a class="level-item">
+                                <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+                            </a>
+                            <a class="level-item">
+                                <span class="icon is-small"><i class="fa fa-heart"></i></span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="media-right">
+                    <button class="delete"></button>
+                </div>
+            </article>`;
+        });
+
+        let $contents = $('.media-object-container').html(template);
+        let $btns = $contents.find('.delete');
+
+        $btns.on('click', function () {
+            $(this).parents('.media.box').slideUp("normal", function () {
+                $(this).remove();
+            });
+        });
+
+    }
+
 })(window, window.document, window.jQuery)
-
-
-// Class for notification
-class Notification {
-    constructor(selector) {
-        if ($.type(selector) !== 'string') {
-            throw 'You must pass CSS selector';
-        }
-        if (selector.trim() === '') {
-            throw 'You have passed an Empty arguments';
-        }
-        if (!this) {
-            throw 'new ... um is this necessary?';
-        }
-
-        this.$elements = $(selector);
-        this.$elements.each(index => {
-            let $el = this.$elements.eq(index);
-            $el.find('.delete').on('click', this.close.bind($el));
-        })
-    }
-
-    close(){
-        $(this).remove();
-    }
-}

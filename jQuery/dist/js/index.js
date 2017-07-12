@@ -212,7 +212,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function (window, document, $) {
     'use strict';
 
-    var $deleteBtn = $('.delete');
+    var $deleteBtn = $('.notification .delete');
     $deleteBtn.hide();
 
     $deleteBtn.parent().on('mouseenter', function () {
@@ -230,37 +230,107 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     });
 })(window, window.document, window.jQuery);
 
-// Class for notification
+// Modal Control
+// ((window, document, $) => {
+//     'use strict';
 
-var Notification = function () {
-    function Notification(selector) {
-        var _this = this;
+//     let $target = $('.show-modal');
+//     let $modal = $('.modal');
 
-        _classCallCheck(this, Notification);
+//     $target.on('click', function (e) {
+//         $modal.addClass('is-active');
+//     });
 
-        if ($.type(selector) !== 'string') {
-            throw 'You must pass CSS selector';
+//     $modal.on('click', function (e) {
+//         let $btn = $(e.target);
+
+//         if ($btn.is('.delete') ||
+//             $btn.is('.modal-background') ||
+//             $btn.is('.is-danger')) {
+
+//             close();
+//         }
+//     });
+
+//     function close() {
+//         $modal.removeClass('is-active');
+//     }
+
+
+// })(window, window.document, window.jQuery)
+
+// Modal Control, Class
+
+(function (window, document, $) {
+    'use strict';
+
+    var Modal = function () {
+        function Modal(selector, trigger) {
+            _classCallCheck(this, Modal);
+
+            this.$node = $(selector);
+            this.$btn = $(trigger);
+
+            // When you trigger the event in js, 'this' will become its event target -> $btn, so bind to class instance again.
+            this.$btn.on('click', this.open.bind(this));
+            this.$node.find('.delete, .modal-background, .is-danger').on('click', this.close.bind(this));
         }
-        if (selector.trim() === '') {
-            throw 'You have passed an Empty arguments';
-        }
-        if (!this) {
-            throw 'new ... um is this necessary?';
-        }
 
-        this.$elements = $(selector);
-        this.$elements.each(function (index) {
-            var $el = _this.$elements.eq(index);
-            $el.find('.delete').on('click', _this.close.bind($el));
-        });
+        _createClass(Modal, [{
+            key: 'open',
+            value: function open() {
+                this.$node.addClass('is-active');
+            }
+        }, {
+            key: 'close',
+            value: function close() {
+                this.$node.removeClass('is-active');
+            }
+        }]);
+
+        return Modal;
+    }();
+
+    var modalInit = new Modal('.modal', '.show-modal');
+})(window, window.document, window.jQuery);
+
+// Media Object js template
+(function (window, document, $) {
+    'use strict';
+
+    var imgURL = 'https://api.myjson.com/bins/f0etn';
+    var dataset = void 0;
+
+    // Limits the number of data
+    function limitTo(data, n) {
+        return data.slice(0, n);
     }
 
-    _createClass(Notification, [{
-        key: 'close',
-        value: function close() {
-            $(this).remove();
-        }
-    }]);
+    $.get(imgURL).then(function (data) {
+        dataset = limitTo(data, 5);
+        render(dataset);
+    });
 
-    return Notification;
-}();
+    function render(data) {
+
+        var template = void 0;
+
+        data.forEach(function (item) {
+            var id = item.id.replace(/-/g, '');
+            var name = item.firstName + ' ' + item.lastName;
+            var image = item.image;
+            var bio = item.bio;
+
+            template += '<article class="media box">\n                <figure class="media-left">\n                    <p class="image is-64x64">\n                        <img src="' + image + '">\n                    </p>\n                </figure>\n                <div class="media-content">\n                    <div class="content">\n                        <p>\n                            <strong>' + name + '</strong> <small>@' + id + '</small> <small>31m</small>\n                            <br>\n                            ' + bio + '\n                        </p>\n                    </div>\n                    <nav class="level is-mobile">\n                        <div class="level-left">\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-reply"></i></span>\n                            </a>\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-retweet"></i></span>\n                            </a>\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-heart"></i></span>\n                            </a>\n                        </div>\n                    </nav>\n                </div>\n                <div class="media-right">\n                    <button class="delete"></button>\n                </div>\n            </article>';
+        });
+
+        var $contents = $('.media-object-container').html(template);
+        var $btns = $contents.find('.delete');
+
+        $btns.on('click', function () {
+            $(this).parents('.media.box').slideUp("normal", function () {
+                $(this).remove();
+            });
+        });
+    }
+})(window, window.document, window.jQuery);

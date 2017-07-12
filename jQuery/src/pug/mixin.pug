@@ -25,6 +25,20 @@ mixin accordion(data)
             a(href=link.href)= link.content
 
 mixin notification()
-    .notification.is-primary
+    div(class!=attributes.class)
         button(type="button" aria-label="close-notification").delete
         block
+
+
+mixin modal(data)
+    .modal(class!=attributes.class)
+        .modal-background
+        .modal-card
+            header.modal-card-head
+                h4.modal-card-title= data.title
+                button(type="button" aria-label="close modal").delete
+            section.modal-card-body
+                p dolor sit amet, consectetur adipisicing elit. Magnam blanditiis unde officiis adipisci ex ipsum repellat nisi, accusantium enim nulla!
+            footer.modal-card-foot
+                a.button.is-success= data.success
+                a.button.is-danger= data.cancel

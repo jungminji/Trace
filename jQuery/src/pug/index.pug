@@ -16,13 +16,22 @@ body
             .column.is-6
                 +accordion(accordion_data)
             .column.is-6
-                +notification()
+                +notification()(class="notification is-primary")
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum officiis velit porro, delectus aliquid at animi nulla iste eveniet saepe ut recusandae eius voluptas, cum sed, rerum illo consectetur culpa!
-                +notification()
+                +notification()(class="notification is-danger")
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum officiis velit porro, delectus aliquid at animi nulla iste eveniet saepe ut recusandae eius voluptas, cum sed, rerum illo consectetur culpa!
-                +notification()
+                +notification()(class="notification is-info")
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum officiis velit porro, delectus aliquid at animi nulla iste eveniet saepe ut recusandae eius voluptas, cum sed, rerum illo consectetur culpa!
-                
+        .columns
+            .column.is-6
+                a.button.is-primary.is-large.show-modal Launch Modal
+            .column.is-3
+                +modal({
+                    title: "Try Jungmin",
+                    success: "Save Change",
+                    cancel: "Cancel"
+                })(class="customized")
+                        
         .columns
             .column.is-6
                 p.box Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea temporibus eveniet, debitis quibusdam illum hic vero distinctio officia doloribus iste accusamus consequuntur atque alias natus ab itaque possimus molestias minus.
@@ -36,7 +45,9 @@ body
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
                 p.box Atque modi voluptas quos nihil veritatis placeat, libero deleniti officia harum sunt obcaecati voluptatem laboriosam eum vero, quidem earum, repudiandae veniam maiores molestias omnis accusamus ut assumenda eligendi culpa amet?
-
+            .column.is-6
+                .media-object-container
+                
                 
 
                     
