@@ -1,3 +1,14 @@
+$(() => {
+    // When document is ready, execute this callback function
+    ((global, $) => {
+        "use strict";
+        console.log("DOM is ready");
+
+        //- $("body").children().attr("class", "body-children");
+
+    })(window, window.jQuery);
+});
+
 ((window, $) => {
 
     'use strict';
@@ -19,7 +30,6 @@
 ((window, $) => {
 
     'use strict';
-
     console.log(`jQuery version: ${$().jquery}`);
     console.log(`jQuery version: ${$.fn.jquery}`);
     console.log(`jQuery version: ${$.prototype.jquery}`);
@@ -144,7 +154,25 @@
     if (!$.cache) {
         $.cache = el => $.data(el, '$') || $.data(el, '$', $(el)); // Set data
     }
-
+    if (!$.shake) {
+        $.shake = ($el, time = 2000, shake = 10, distance = 5) => {
+            let duration = time / shake / 4;
+            $el.css('position', 'relative');
+            $.when(
+                $el
+                .stop()
+                .animate({
+                    left: -distance
+                }, duration)
+                .animate({
+                    left: distance
+                }, duration)
+                .animate({
+                    left: 0
+                }, duration)
+            ).done(() => $el.removeAttr('style'));
+        }
+    }
 })(window.jQuery);
 
 

@@ -1,8 +1,19 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+$(function () {
+    // When document is ready, execute this callback function
+    (function (global, $) {
+        "use strict";
+
+        console.log("DOM is ready");
+
+        //- $("body").children().attr("class", "body-children");
+    })(window, window.jQuery);
+});
 
 (function (window, $) {
 
@@ -12,8 +23,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     $.holdReady(true); // Prevent executing $(document).ready function
 
-    var id = 'f0etn';
-    var url = 'https://api.myjson.com/bins/' + id;
+    var id = "f0etn";
+    var url = "https://api.myjson.com/bins/" + id;
 
     $.get(url).then(function (data) {
         console.log("Ajax Data Get");
@@ -25,10 +36,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     'use strict';
 
-    console.log('jQuery version: ' + $().jquery);
-    console.log('jQuery version: ' + $.fn.jquery);
-    console.log('jQuery version: ' + $.prototype.jquery);
-    console.log('jQuery version: ' + jQuery.prototype.jquery);
+    console.log("jQuery version: " + $().jquery);
+    console.log("jQuery version: " + $.fn.jquery);
+    console.log("jQuery version: " + $.prototype.jquery);
+    console.log("jQuery version: " + jQuery.prototype.jquery);
 })(window, window.jQuery);
 
 (function (window, $) {
@@ -121,7 +132,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         console.log(names); // ["app", "container"]
 
         var converted = names.map(function (name) {
-            return '*-' + name + '-*';
+            return "*-" + name + "-*";
         });
 
         converted = converted.join(' ');
@@ -144,6 +155,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         $.cache = function (el) {
             return $.data(el, '$') || $.data(el, '$', $(el));
         }; // Set data
+    }
+    if (!$.shake) {
+        $.shake = function ($el) {
+            var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
+            var shake = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+            var distance = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+
+            var duration = time / shake / 4;
+            $el.css('position', 'relative');
+            $.when($el.stop().animate({
+                left: -distance
+            }, duration).animate({
+                left: distance
+            }, duration).animate({
+                left: 0
+            }, duration)).done(function () {
+                return $el.removeAttr('style');
+            });
+        };
     }
 })(window.jQuery);
 
@@ -277,12 +307,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(Modal, [{
-            key: 'open',
+            key: "open",
             value: function open() {
                 this.$node.addClass('is-active');
             }
         }, {
-            key: 'close',
+            key: "close",
             value: function close() {
                 this.$node.removeClass('is-active');
             }
@@ -298,7 +328,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function (window, document, $) {
     'use strict';
 
-    var imgURL = 'https://api.myjson.com/bins/f0etn';
+    var imgURL = "https://api.myjson.com/bins/f0etn";
     var dataset = void 0;
 
     // Limits the number of data
@@ -317,11 +347,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         data.forEach(function (item) {
             var id = item.id.replace(/-/g, '');
-            var name = item.firstName + ' ' + item.lastName;
+            var name = item.firstName + " " + item.lastName;
             var image = item.image;
             var bio = item.bio;
 
-            template += '<article class="media box">\n                <figure class="media-left">\n                    <p class="image is-64x64">\n                        <img src="' + image + '">\n                    </p>\n                </figure>\n                <div class="media-content">\n                    <div class="content">\n                        <p>\n                            <strong>' + name + '</strong> <small>@' + id + '</small> <small>31m</small>\n                            <br>\n                            ' + bio + '\n                        </p>\n                    </div>\n                    <nav class="level is-mobile">\n                        <div class="level-left">\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-reply"></i></span>\n                            </a>\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-retweet"></i></span>\n                            </a>\n                            <a class="level-item">\n                                <span class="icon is-small"><i class="fa fa-heart"></i></span>\n                            </a>\n                        </div>\n                    </nav>\n                </div>\n                <div class="media-right">\n                    <button class="delete"></button>\n                </div>\n            </article>';
+            template += "<article class=\"media box\">\n                <figure class=\"media-left\">\n                    <p class=\"image is-64x64\">\n                        <img src=\"" + image + "\">\n                    </p>\n                </figure>\n                <div class=\"media-content\">\n                    <div class=\"content\">\n                        <p>\n                            <strong>" + name + "</strong> <small>@" + id + "</small> <small>31m</small>\n                            <br>\n                            " + bio + "\n                        </p>\n                    </div>\n                    <nav class=\"level is-mobile\">\n                        <div class=\"level-left\">\n                            <a class=\"level-item\">\n                                <span class=\"icon is-small\"><i class=\"fa fa-reply\"></i></span>\n                            </a>\n                            <a class=\"level-item\">\n                                <span class=\"icon is-small\"><i class=\"fa fa-retweet\"></i></span>\n                            </a>\n                            <a class=\"level-item\">\n                                <span class=\"icon is-small\"><i class=\"fa fa-heart\"></i></span>\n                            </a>\n                        </div>\n                    </nav>\n                </div>\n                <div class=\"media-right\">\n                    <button class=\"delete\"></button>\n                </div>\n            </article>";
         });
 
         var $contents = $('.media-object-container').html(template);
