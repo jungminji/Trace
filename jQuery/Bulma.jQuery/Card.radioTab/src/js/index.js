@@ -120,3 +120,13 @@
     })
 
 })(window, window.jQuery);
+
+
+
+// Experimental: Swipe
+(function (window, $) {
+    'use strict';
+
+    $('.touchzone').swipe();
+    
+})(window, window.jQuery);

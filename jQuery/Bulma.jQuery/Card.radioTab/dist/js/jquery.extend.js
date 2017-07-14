@@ -1,6 +1,6 @@
 'use strict';
 
-(function ($) {
+(function (window, $) {
   'use strict';
 
   // jQuery entended static methods
@@ -48,4 +48,67 @@
       return this;
     };
   }
-})(window.jQuery);
+
+  if (!$.fn.swipe) {
+    $.fn.swipe = function () {
+      var $this = this;
+
+      return $.each($this, function (i, el) {
+        var $el = $this.eq(i);
+
+        console.log($el);
+        console.log(el);
+
+        var touch;
+        var startX;
+        var startY;
+        var moveX;
+        var moveY;
+        var distanceX;
+        var distanceY;
+        var endX;
+        var endY;
+
+        // Touch Event (Mobile): touchstart, touchmove, touchend, touchenter, touchleave, touchcancel
+        $el.on({
+          touchstart: function touchstart(e) {
+            e.preventDefault();
+            touch = e.changedTouches[0];
+            startX = window.parseInt(touch.clientX, 10);
+            startY = window.parseInt(touch.clientY, 10);
+            console.log('startX : ' + startX);
+            console.log('startY : ' + startY);
+          },
+          touchmove: function touchmove(e) {
+            e.preventDefault();
+            touch = e.changedTouches[0];
+            moveX = window.parseInt(touch.clientX, 10);
+            moveY = window.parseInt(touch.clientY, 10);
+            distanceX = window.parseInt(moveX - startX, 10);
+            distanceY = window.parseInt(moveY - startY, 10);
+
+            // Swipe direction
+            distanceX = distanceX > 0 ? 'right' : 'left';
+            distanceY = distanceY > 0 ? 'down' : 'up';
+
+            console.log('moveX : ' + moveX);
+            console.log('moveY : ' + moveY);
+            console.log('distanceX : ' + distanceX);
+            console.log('distanceY : ' + distanceY);
+          },
+          touchend: function touchend(e) {
+            e.preventDefault();
+            touch = e.changedTouches[0];
+            endX = window.parseInt(touch.clientX, 10);
+            endY = window.parseInt(touch.clientY, 10);
+            console.log('endX : ' + endX);
+            console.log('endY : ' + endY);
+          }
+        });
+
+        // Mouse Event (Desktop): mousedown, mousemove, mouseup, mouseenter, mouseleave
+
+      });
+    };
+  }
+})(window, window.jQuery);

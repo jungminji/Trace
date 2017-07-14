@@ -140,3 +140,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         $(this).parent().radioClass('is-active');
     });
 })(window, window.jQuery);
+
+// Experimental: Swipe
+(function (window, $) {
+    'use strict';
+
+    $('.touchzone').swipe();
+})(window, window.jQuery);
