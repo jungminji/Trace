@@ -5,7 +5,7 @@
 - Add little option to skip to main content
 
 
-![Screen Shot 2017-07-10 at 3.58.16 PM](img/skip-link.png)
+![Screen Shot 2017-07-10 at 3.58.16 PM](img/skip.link.png)
 
 
 

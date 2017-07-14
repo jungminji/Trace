@@ -23,7 +23,7 @@
 
 - Call the focus method of this new soon to be focused item
 
-![Screen Shot 2017-07-10 at 4.19.32 PM](img/roving-focus.png)
+![Screen Shot 2017-07-10 at 4.19.32 PM](img/roving.focus.png)
 
 
 
