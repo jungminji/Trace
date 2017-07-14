@@ -1,4 +1,4 @@
-(function (window, document, $) {
+(function (window, $) {
     'use strict';
 
     // Ask user to load jQuery first
@@ -79,13 +79,13 @@
         }
         save(e) {
             e.preventDefault();
-            
+
             let editedText = this.$content.find('*:not(br, hr)');
             editedText.removeAttr('contenteditable');
-            
+
             // Ajax to save data
-                // ...
-                // ...
+            // ...
+            // ...
 
         }
         edit(e) {
@@ -107,4 +107,16 @@
     new Card('.twitter');
     new Card('.facebook');
 
-})(window, window.document, window.jQuery);
+})(window, window.jQuery);
+
+
+// Tab control
+(function (window, $) {
+    'use strict';
+
+    $('.radio-tab').find('[role="tab"]').on('click', function () {
+        console.log($(this));
+        $(this).parent().radioClass('is-active');
+    })
+
+})(window, window.jQuery);

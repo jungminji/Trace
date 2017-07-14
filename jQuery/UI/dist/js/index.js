@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-(function (window, document, $) {
+(function (window, $) {
     'use strict';
 
     // Ask user to load jQuery first
@@ -129,4 +129,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     new Card('.twitter');
     new Card('.facebook');
-})(window, window.document, window.jQuery);
+})(window, window.jQuery);
+
+// Tab control
+(function (window, $) {
+    'use strict';
+
+    $('.radio-tab').find('[role="tab"]').on('click', function () {
+        console.log($(this));
+        $(this).parent().radioClass('is-active');
+    });
+})(window, window.jQuery);

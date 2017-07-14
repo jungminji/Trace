@@ -1,6 +1,7 @@
 (function ($) {
   'use strict';
 
+  // jQuery entended static methods
   if (!$.random) {
     $.random = function (n) {
       return Math.floor(Math.random() * n);
@@ -32,4 +33,16 @@
       });
     };
   }
+
+
+  // jQuery prototype extended methods
+  if(!$.fn.radioClass){
+    $.fn.radioClass = function(name='active'){
+      this.siblings(`.${name}`).removeClass(name);
+      this.addClass(name);
+
+      return this;
+    }
+  }
+
 })(window.jQuery);

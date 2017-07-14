@@ -3,6 +3,8 @@
 (function ($) {
   'use strict';
 
+  // jQuery entended static methods
+
   if (!$.random) {
     $.random = function (n) {
       return Math.floor(Math.random() * n);
@@ -32,6 +34,18 @@
       }, duration)).done(function () {
         return $el.removeAttr('style');
       });
+    };
+  }
+
+  // jQuery prototype extended methods
+  if (!$.fn.radioClass) {
+    $.fn.radioClass = function () {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'active';
+
+      this.siblings('.' + name).removeClass(name);
+      this.addClass(name);
+
+      return this;
     };
   }
 })(window.jQuery);
