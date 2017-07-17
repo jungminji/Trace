@@ -51,7 +51,7 @@
 
             panelWidth = $tabPanels.first().width();
             $tabWrapper.width(panelWidth * length);
-            $tabWrapper.show(); // Showing after loads
+            $tabWrapper.show(); // Showing after above code is executed
         }
 
         let auto = function () {
