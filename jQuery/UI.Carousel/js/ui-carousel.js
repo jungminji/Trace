@@ -1,3 +1,5 @@
+
+
 (function (window, $) {
     'use strict';
 
@@ -9,6 +11,7 @@
         let $nextBtn;
         let $tabList;
         let autoPlay = true;
+        let duration = 1000;
 
         // Constructor
         function Carousel() {
@@ -48,10 +51,20 @@
 
             panelWidth = $tabPanels.first().width();
             $tabWrapper.width(panelWidth * length);
+            $tabWrapper.show(); // Showing after loads
         }
 
         let auto = function () {
-            setInterval(nextClick, 1500);
+
+            let autoPlay = setInterval(nextClick, duration);
+
+            $tabWrapper.on('mouseenter', function(){
+                clearInterval(autoPlay);
+            });
+            $tabWrapper.on('mouseleave', function(){
+                autoPlay = setInterval(nextClick, duration);
+            })
+            
         }
 
         let clickEvent = function () {
