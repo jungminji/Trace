@@ -128,5 +128,5 @@
     'use strict';
 
     $('.touchzone').swipe();
-    
+
 })(window, window.jQuery);
