@@ -8,26 +8,31 @@
         let $prevBtn;
         let $nextBtn;
         let $tabList;
+        let autoPlay = true;
 
-        // 캐러셀 생성자 함수
+        // Constructor
         function Carousel() {
-            $tabWrapper = $('.ui-carousel-tabpanel-wrapper');
-            $tabPanels = $('.ui-carousel-tabpanel');
-            $prevBtn = $('.ui-carousel-prev-button');
-            $nextBtn = $('.ui-carousel-next-button');
-            $tabList = $('.ui-carousel-tablist ul');
             init();
-            eventBind();
+            clickEvent();
+            auto();
+            this.next();
+            this.prev();
             resizeEvent();
         }
 
         let init = function () {
 
+            $tabWrapper = $('.ui-carousel-tabpanel-wrapper');
+            $tabPanels = $('.ui-carousel-tabpanel');
+            $prevBtn = $('.ui-carousel-prev-button');
+            $nextBtn = $('.ui-carousel-next-button');
+            $tabList = $('.ui-carousel-tablist ul');
+
             let panelWidth;
             let length = $tabPanels.length;
 
             $tabPanels.each(function () {
-                // 각 패널 아이템의 css 속성과 크기 설정
+                // set width, height, and other css properties for each panel item
                 $(this)
                     .width($tabWrapper.width())
                     .height($tabWrapper.height())
@@ -44,46 +49,17 @@
             });
 
             panelWidth = $tabPanels.first().width();
-
-            // 패널 래퍼의 크기 설정
             $tabWrapper.width(panelWidth * length);
         }
 
-        // 클릭 이벤트 바인딩
-        let eventBind = function () {
+        let auto = function () {
+            setInterval(nextClick, 1500);
+        }
 
-            $prevBtn.on('click', function () {
+        let clickEvent = function () {
 
-                if ($tabList.children().first().hasClass('active')) {
-                    $tabList.find('.active').removeClass('active');
-                    $tabList.children().last().addClass('active');
-                    $tabWrapper.animate({
-                        'left': `-${$tabPanels.first().width() * ($tabPanels.length-1)}px`
-                    }, 'fast');
-                } else {
-                    $tabList.find('.active').removeClass('active').prev().addClass('active');
-                    $tabWrapper.animate({
-                        "left": `+=${$tabPanels.first().width()}`
-                    }, "slow");
-                }
-            })
-
-            $nextBtn.on('click', function () {
-
-
-                if ($tabList.children().last().hasClass('active')) {
-                    $tabList.find('.active').removeClass('active');
-                    $tabList.children().first().addClass('active');
-                    $tabWrapper.animate({
-                        'left': '0px'
-                    }, 'fast');
-                } else {
-                    $tabList.find('.active').removeClass('active').next().addClass('active');
-                    $tabWrapper.animate({
-                        "left": `-=${$tabPanels.first().width()}`
-                    }, "slow");
-                }
-            })
+            $nextBtn.on('click', nextClick);
+            $prevBtn.on('click', prevClick);
 
             // Event delegation
             $tabList.on('click', 'a', function (e) {
@@ -91,7 +67,6 @@
                 $tabList.find('.active').removeClass('active');
                 $(this).parent().addClass('active');
 
-                // Find nth of
                 let activeIndex = $(this).parent().index();
                 $tabWrapper.animate({
                     'left': `-${$tabPanels.first().width() * activeIndex}px`
@@ -99,18 +74,45 @@
 
             })
         }
+        let nextClick = function () {
+
+            if ($tabList.children().last().hasClass('active')) {
+                $tabList.find('.active').removeClass('active');
+                $tabList.children().first().addClass('active');
+                $tabWrapper.animate({
+                    'left': '0px'
+                }, 'fast');
+            } else {
+                $tabList.find('.active').removeClass('active').next().addClass('active');
+                $tabWrapper.animate({
+                    "left": `-=${$tabPanels.first().width()}`
+                }, "slow");
+            }
+        }
+        let prevClick = function () {
+            if ($tabList.children().first().hasClass('active')) {
+                $tabList.find('.active').removeClass('active');
+                $tabList.children().last().addClass('active');
+                $tabWrapper.animate({
+                    'left': `-${$tabPanels.first().width() * ($tabPanels.length-1)}px`
+                }, 'fast');
+            } else {
+                $tabList.find('.active').removeClass('active').prev().addClass('active');
+                $tabWrapper.animate({
+                    "left": `+=${$tabPanels.first().width()}`
+                }, "slow");
+            }
+        }
+
         let resizeEvent = function () {
 
             $(window).on('resize', function () {
-                // 현재 window width 가져옴
                 $tabWrapper.css('width', '100%');
 
-                // panel 들은 window width 를 가지게됨
                 $tabPanels.each(function () {
                     $(this).width($tabWrapper.width());
                 });
 
-                // 래퍼 width 를 패널 하나의 값 * 갯수
                 $tabWrapper.width($tabPanels.first().width() * $tabPanels.length);
 
                 if ($tabWrapper.css('left') !== '0px') {
@@ -122,10 +124,23 @@
 
         Carousel.prototype = {
             constructor: Carousel,
+
+            next: function () {
+
+                $nextBtn.on('click', function () {
+
+
+                })
+            },
+            prev: function () {
+                $prevBtn.on('click', function () {
+
+
+                })
+            }
         }
 
-
-        new Carousel;
+        window.cr = new Carousel;
     });
 
 })(window, window.jQuery);
