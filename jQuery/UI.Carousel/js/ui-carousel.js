@@ -15,8 +15,6 @@
             init();
             clickEvent();
             auto();
-            this.next();
-            this.prev();
             resizeEvent();
         }
 
