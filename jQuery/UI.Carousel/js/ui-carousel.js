@@ -124,20 +124,6 @@
 
         Carousel.prototype = {
             constructor: Carousel,
-
-            next: function () {
-
-                $nextBtn.on('click', function () {
-
-
-                })
-            },
-            prev: function () {
-                $prevBtn.on('click', function () {
-
-
-                })
-            }
         }
 
         window.cr = new Carousel;
