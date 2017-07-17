@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/js/main.js"],"names":["global","window"],"mappings":"aAAA,iCACA,CAAC,SAACA,MAAD,CAAU,CACT,YAID,CALD,EAKGC,MALH","file":"main.js","sourcesContent":["/*! main.js @ 2017, yamoo9.net */\n((global)=>{\n  'use strict';\n\n  \n\n})(window);\n"]}

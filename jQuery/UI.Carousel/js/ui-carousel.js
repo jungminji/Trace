@@ -15,6 +15,7 @@
 
         // Constructor
         function Carousel() {
+
             init();
             clickEvent();
             auto();
