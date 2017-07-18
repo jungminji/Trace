@@ -5,12 +5,37 @@ html(lang="ko-KR")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
-    title 주제 - Vue.js 프레임워크
+    title Learn Vue
 
     link(rel="shortcut icon" type="image/x-icon" href="assets/favicon.png")
     link(rel="stylesheet" href="css/main.css")
 
   body
 
+    .app.container
+      .columns
+        .column.is-8.is-offset-2
+          .control
+            label(for="user-input").button.is-info User Input (jQuery)
+            input.user-input.input(
+              type="text"
+              id="user-input"
+            )
+          p.box
+            strong.print-user-input
+
+      .columns.vue-demo
+        .column.is-8.is-offset-2
+          .control
+            label(for="user-input").button.is-primary User Input (Vue)
+            input.user-input.input(
+              v-model="message"
+              type="text"
+              id="user-input"
+            )
+          p.box {{message}}
+
+
     script(src="lib/jquery.min.js")
+    script(src="https://unpkg.com/vue")
     script(src="js/main.js")
