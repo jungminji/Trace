@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+html(lang="ko-KR")
+
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    title Learn Vue
+
+    link(rel="shortcut icon" type="image/x-icon" href="assets/favicon.png")
+    link(rel="stylesheet" href="css/main.css")
+
+  body
+
+    #app.container
+        .columns
+            .column.is-6.content
+                .box
+                    pre {{ info }}
+                    pre {{ info.author }}
+                    pre {{ info.job }}
+                    pre {{ 4 + 10 }}
+                    pre {{ info.author + ' : This is my name' }}
+                    pre {{ `${info.author} + ${info.job}` }}
+                    pre {{ `Components index 0: ${components[0]}` }}
+                    pre {{ new Date().getFullYear() }}
+            .column.is-6.content
+                .box
+                    h3.box v-for
+                    ul
+                        li(v-for="item in components")
+                            | {{ item }}
+
+    //- You can only use ID in x-template
+    //- Must be loaded before Vue
+    //- x-template is not recommended
+    script(type="type/x-template" id="app-template")
+        #app.container
+            .columns
+                .column.is-6.content
+                    p This is x-template example.
+    script(src="lib/vue.js")
+    script(src="js/vue.template.js")

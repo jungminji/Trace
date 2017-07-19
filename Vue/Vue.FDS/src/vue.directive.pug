@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+html(lang="ko-KR")
+
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    title Learn Vue
+
+    link(rel="shortcut icon" type="image/x-icon" href="assets/favicon.png")
+    link(rel="stylesheet" href="css/main.css")
+
+  body
+
+    #app.container
+        .columns.content
+            .column.is-6
+                .box
+                    p.button.is-success.is-outlined v-text
+                    pre(v-text='msg')
+            .column.is-6
+                .box
+                    p.button.is-success.is-outlined v-if
+                    pre(v-if='show') Visible when show is true
+        .columns.content
+            .column.is-6
+                .box
+                    p.button.is-success.is-outlined v-html
+                    pre(v-html="markup")
+
+    script(src="lib/vue.js")
+    script(src="js/vue.directive.js")

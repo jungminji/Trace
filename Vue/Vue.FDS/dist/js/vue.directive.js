@@ -1,0 +1,2 @@
+'use strict';(function(window){'use strict';new Vue({el:'#app',data:{msg:'v-text example',show:true,markup:'\n            <p v-if=\'show\'>v-html example, data bind won\'t work</p>\n            '}})})(window);
+//# sourceMappingURL=vue.directive.js.map
