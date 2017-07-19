@@ -22,6 +22,7 @@ html(lang="ko-KR")
                     span.button.is-success.is-outlined v-if
                     span.button.is-success.is-outlined v-else
                     span.button.is-success.is-outlined v-else-if
+                    button(type='button' @click='changeMode').button.is-danger Toggle
                     pre(v-if='show') Visible when show is true
                 .box
                     p.button.is-success.is-outlined v-html
@@ -30,24 +31,47 @@ html(lang="ko-KR")
                     p.button.is-success.is-outlined v-pre
                     pre(v-pre) {{ msg }} v-pre skips compile process<br>Applies on child elements
                 .box
-                    p.button.is-success.is-outlined v-show
-                    pre(v-pre) {{ msg }} v-pre skips compile process<br>Applies on child elements
-                .box
                     p.button.is-success.is-outlined v-cloak
                     pre(v-cloak) Cloaks the element until<br>Vue instance compilation is finished<br>You have to add style of <br><code>[v-clock]<br>   display: none;</code>
                 .box
                     p.button.is-success.is-outlined v-once
                     pre(v-once='msg') Only binds data once. (ex. Brand logos)<br>Optimizing performance<br>Applies on child elements
+                .box
+                    p.button.is-success.is-outlined v-show
+                    button(type='button' @click='changeMode').button.is-danger Toggle
+                    pre(v-show='show') show property uses display:none;<br>Expensive on load, but cheap in toggle.
             .column.is-6
                 .box
                     p.button.is-success.is-outlined v-for (Object)
                     p.notification.is-warning v-for has higher priority over v-if
                     ul
-                        li(v-for="value, key in forObj") {{ `${key} : ${value}` }}
+                        li(v-for="value, key, index in forObj") {{ `${value} : ${key} : ${index}` }}
                 .box
                     p.button.is-success.is-outlined v-for (Array)
                     ul
                         li(v-for="value, index in forArr") {{ `${index} : ${value}` }}
+                            span(v-if="show") : Only show is true
+                .box
+                    p.button.is-success.is-outlined v-for (Number)
+                    p
+                        a(href="#" v-for="i in 10").button.is-info.is-outlined {{ i }}
+                .box
+                    p.button.is-success.is-outlined v-for (String)
+                    p
+                        a(href="#" v-for="s in 'ALPHABAT'").button.is-info.is-outlined {{ s }}
+                .box(v-cloak)
+                    p.button.is-success.is-outlined v-for Nested
+                    p(v-for="i in 3").box {{ i }} : 
+                        a(href="#" v-for="s in 'NESTED FOR'").button.is-info.is-outlined {{ s }}
+                .box(v-cloak)
+                    p.button.is-success.is-outlined template
+                    template(v-if='show')
+                        p.box template to wrap contents. But tag itself is not rendered in actual DOM
+
+                .box
+                    p.button.is-success.is-outlined Add reactive data
+                    input(type="text" @input="getContent" :value="msg").input.add-input
+                    button(@click='addItem').button.is-danger.add-btn Add
 
     script(src="lib/vue.js")
     script(src="js/vue.directive.js")
