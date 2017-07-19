@@ -18,15 +18,36 @@ html(lang="ko-KR")
                 .box
                     p.button.is-success.is-outlined v-text
                     pre(v-text='msg')
-            .column.is-6
                 .box
-                    p.button.is-success.is-outlined v-if
+                    span.button.is-success.is-outlined v-if
+                    span.button.is-success.is-outlined v-else
+                    span.button.is-success.is-outlined v-else-if
                     pre(v-if='show') Visible when show is true
-        .columns.content
-            .column.is-6
                 .box
                     p.button.is-success.is-outlined v-html
-                    pre(v-html="markup")
+                    pre(v-html='markup')
+                .box
+                    p.button.is-success.is-outlined v-pre
+                    pre(v-pre) {{ msg }} v-pre skips compile process<br>Applies on child elements
+                .box
+                    p.button.is-success.is-outlined v-show
+                    pre(v-pre) {{ msg }} v-pre skips compile process<br>Applies on child elements
+                .box
+                    p.button.is-success.is-outlined v-cloak
+                    pre(v-cloak) Cloaks the element until<br>Vue instance compilation is finished<br>You have to add style of <br><code>[v-clock]<br>   display: none;</code>
+                .box
+                    p.button.is-success.is-outlined v-once
+                    pre(v-once='msg') Only binds data once. (ex. Brand logos)<br>Optimizing performance<br>Applies on child elements
+            .column.is-6
+                .box
+                    p.button.is-success.is-outlined v-for (Object)
+                    p.notification.is-warning v-for has higher priority over v-if
+                    ul
+                        li(v-for="value, key in forObj") {{ `${key} : ${value}` }}
+                .box
+                    p.button.is-success.is-outlined v-for (Array)
+                    ul
+                        li(v-for="value, index in forArr") {{ `${index} : ${value}` }}
 
     script(src="lib/vue.js")
     script(src="js/vue.directive.js")

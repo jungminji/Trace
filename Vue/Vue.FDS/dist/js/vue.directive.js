@@ -1,2 +1,2 @@
-'use strict';(function(window){'use strict';new Vue({el:'#app',data:{msg:'v-text example',show:true,markup:'\n            <p v-if=\'show\'>v-html example, data bind won\'t work</p>\n            '}})})(window);
+'use strict';(function(window){'use strict';new Vue({el:'#app',data:{msg:'v-text example',show:true,markup:'\n            <p v-if=\'show\'>v-html example, data bind won\'t work</p>\n            ',forObj:{name:'Jungmin',age:27,gf:'mmooni'},forArr:['Special','Location','Detected']}})})(window);
 //# sourceMappingURL=vue.directive.js.map
