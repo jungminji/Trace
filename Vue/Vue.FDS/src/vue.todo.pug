@@ -5,67 +5,42 @@ html(lang="ko-KR")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
-    title 주제 - Vue.js 프레임워크
+    title Vue, Firebase
 
     link(rel="shortcut icon" type="image/x-icon" href="assets/favicon.png")
     link(rel="stylesheet" href="css/main.css")
 
   body
 
-    .project-team.container(v-cloak)
-      .columns
-        .hide.column.is-6
-          h1.title.is-3 {{ team.name }}
-          ul.team
-            li.message.is-danger.group(v-for="(group, i) in team.group")
-              .message-header
-                span.icon.is-small
-                  i.fa.fa-group(aria-hidden="true")
-                strong.title.is-4 Team {{ i + 1 }}
-              .message-body
-                ul.members
-                  li.member(v-for="(member, n) in group")
-                    strong.tag.is-danger {{ member }}
-                      button.is-small.delete(
-                        role="button"
-                        aria-label="제거"
-                        @click="excludeMember(i,n)"
-                        @keyup.shift.f2="excludeMember(i,n)"
-                      )
-        .column.is-10-mobile.is-offset-1-mobile
-          h2.title.is-3 Plan 리스트
-          .plan-wrapper.columns
-            .column
-              .field
-                .control.is-medium(
-                  :class="{'is-loading': is_transfer}"
-                )
-                  label(for="plan_it").a11y-hidden 플랜
-                  input.input.is-medium(
-                    id="plan_it"
-                    type="input"
-                    @input="updatePlanIt"
-                    v-bind:value="plan_it"
-                    placeholder="Plan을 입력해주세요"
-                  )
+    .app.container.content(v-cloak)
+        .columns
+            .column.is-11
+                input(type="text" @keyup.enter="add").input.userInput
+            .column.is-1
+                button(type="button" @click="add").button.is-primary Add
+        .columns
+          .column.is-6
+            h3.box.has-text-centered Tasks
+          .column.is-6
+            h3.box.has-text-centered Completed
+        .columns
+            .column.is-6
+              transition-group(name="list")
+                div(v-for="(todo, index) in todoList.task" :key="index").notification.is-primary
+                  | {{ todo.content }}
+                  button(type="button" @click="complete(todo.key)").button.is-small.is-info.done Done
+                  button(type="button" @click="edit").button.is-small.is-dark.edit Edit
+                  button(type="button" @click="remove(todo.key)").delete
+                  input(type="text" @keyup.enter="editConfirm(todo.key, $event)" @keyup.esc="editCancel").input.editInput
 
-            .column
-              button.button.is-info.is-disabled(
-                type="button"
-                @click="addPlanIt"
-                v-bind:disabled="is_transfer"
-              ) 등록
-          .columns
-            ul.plan-list.column.is-10
-              li.box.plan(v-for="content of plan")
-                label
-                  input(
-                    type="checkbox"
-                    v-model="content.done"
-                  )
-                  |  {{ content.it }}
+            .column.is-6
+              transition-group(name="list")
+                div(v-for="(todo, index) in todoList.complete" :key="index").notification.is-failed.completeTask
+                  | {{ todo.content }}
+                  button(type="button" @click="undo(todo.key)").button.is-small.is-danger.undo Undo
+                  button(type="button" @click="remove(todo.key)").delete
 
 
-    script(src="lib/jquery.min.js")
-    script(src="//unpkg.com/vue@2.4.1/dist/vue.js")
+    script(src="https://unpkg.com/vue")
+    script(src="https://gstatic.com/firebasejs/4.0.0/firebase.js")
     script(src="js/vue.todo.js")

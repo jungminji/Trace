@@ -39,11 +39,32 @@ img, video
   margin-top: 45px
 
 
+.done, .undo
+  position: absolute
+  right: 5px
+  bottom: 5px
+.edit
+  position: absolute
+  right: 60px
+  bottom: 5px
 
-// .fade-enter-active,
-// .fade-leave-active
-//   transition: opacity .5s
+.completeTask
+  text-decoration: line-through
 
-// .fade-enter,
-// .fade-leave-to
-//   opacity: 0
+.editInput
+  display: none
+.active
+  display: block
+
+
+
+.list-item
+  display: inline-block
+  margin-right: 10px
+
+.list-enter-active, .list-leave-active
+  transition: all 0.6s
+
+.list-enter, .list-leave-to
+  opacity: 0
+  transform: translateY(20px)

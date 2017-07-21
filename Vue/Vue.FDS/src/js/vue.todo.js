@@ -1,75 +1,147 @@
-/*! main.js @ 2017, yamoo9.net */
-((global)=>{
-  'use strict';
+{
+    let config = {
+        apiKey: "",
+        authDomain: "vue-todolist-c856b.firebaseapp.com ",
+        databaseURL: "https://vue-todolist-c856b.firebaseio.com",
+        storageBucket: "bucket.appspot.com"
+    };
+    firebase.initializeApp(config);
 
-  // 사용자 정의 키코드 등록
-  Vue.config.keyCodes = {
-    f1: 112,
-    f2: 113
-  };
+    // Vue instance
+    new Vue({
 
-  // Firebase DB 통신 주소
-  let firebase_db = 'https://vue-planlist.firebaseio.com/planlist.json';
+        el: '.app',
+        created() {
+            this.getList();
+        },
 
-  new Vue({
-    el: '.project-team',
-    created () {
-      // Ajax 통신을 통해 Sever(Firebase)로부터 데이터를 GET 한 후,
-      // Vue 인스턴스 데이터에 GET 한 콘텐츠를 할당(Assign)
-      this.getFirebasePlanData();
-    },
-    data: {
-      team: {
-        name: 'FDS 4기 프로젝트 명단',
-        group: [
-          ['강소연', '전현우'],
-          ['손현', '강다인', '이소정'],
-          ['김다솜', '김세롬', '지정민'],
-          ['이대호', '김정욱'],
-          ['이범두', '이동우', '이창호'],
-          ['차혜진', '김지수', '이진아'],
-          ['임기완', '이상원'],
-          ['한성욱', '김태훈', '고세민'],
-          ['허우창', '정미주', '기미송']
-        ]
-      },
-      is_transfer: false,
-      plan_it: '',
-      plan: []
-    },
-    methods: {
-      getFirebasePlanData(){
-        $.get(firebase_db).then(data=>{
-            console.log(data);
-            console.log(Object.values(data));
-          this.plan = Object.values(data);
-        });
-      },
-      excludeMember(i,n){
-        this.team.group[i].splice(n, 1);
-      },
-      updatePlanIt(e){
-        this.plan_it = e.target.value;
-      },
-      addPlanIt(){
-        let _this = this;
-        let new_plan_it = {
-          it: _this.plan_it,
-          done: false
-        };
-        // _this.plan.push(new_plan_it);
-        this.is_transfer = true;
-        this.new_plan_it = '';
+        data: {
+            todoList: {
+                task: [],
+                complete: []
+            },
+            editable: false
+        },
 
-        // Firebase DB 통신으로 새로운 플랜 추가하기
-        $.post(firebase_db, JSON.stringify(new_plan_it)).then(data => {
-          // POST 통신이 성공하게 되면,
-          // 다시 GET 통신
-          this.getFirebasePlanData();
-          this.is_transfer = false;
-        });
-      }
-    }
-  });
+        computed: {
 
-})(window);
+        },
+
+        methods: {
+            getList() {
+                // Truncate before fetch todolist
+                this.todoList.task = [];
+                this.todoList.complete = [];
+
+                // Fetching todo items from server
+                firebase.database().ref('todolist/').once('value').then((res) => {
+                    res.forEach((todo) => {
+
+
+                        if (todo.val().status) {
+                            this.todoList.task.push(Object.assign(todo.val(), {
+                                key: todo.key
+                            }));
+                        } else {
+                            this.todoList.complete.push(Object.assign(todo.val(), {
+                                key: todo.key
+                            }));
+                        }
+                    })
+                })
+            },
+            add() {
+                let input = document.querySelector('.userInput');
+
+                if (input.value === '') throw 'You must type something.';
+
+                // .set will overwrite. Be aware!
+                let addedKey = firebase.database().ref('todolist/').push({
+                    content: input.value,
+                    status: true
+                }).key;
+
+                this.todoList.task.push({
+                    content: input.value,
+                    status: true,
+                    key: addedKey
+                });
+
+                input.value = '';
+
+            },
+            remove(key) {
+
+                firebase.database().ref('todolist/' + key).remove();
+
+                this.todoList.task.forEach((item, index) => {
+                    if (item.key === key) {
+                        let toRemove = this.todoList.task.indexOf(item);
+                        this.todoList.task.splice(toRemove, 1);
+                    }
+                });
+                this.todoList.complete.forEach((item, index) => {
+                    if (item.key === key) {
+                        let toRemove = this.todoList.complete.indexOf(item);
+                        this.todoList.complete.splice(toRemove, 1);
+                    }
+                });
+            },
+            complete(key) {
+                firebase.database().ref().child('todolist/' + key).update({
+                    status: false
+                })
+                this.todoList.task.forEach((item, index) => {
+                    if (item.key === key) {
+
+                        let toMove = this.todoList.task.indexOf(item);
+                        toMove = this.todoList.task.splice(toMove, 1);
+                        this.todoList.complete.push(toMove[0]);
+                        this.$set(item, 'status', false);
+                    }
+                })
+
+            },
+            undo(key) {
+                firebase.database().ref().child('todolist/' + key).update({
+                    status: true
+                })
+                this.todoList.complete.forEach((item, index) => {
+                    if (item.key === key) {
+                        let toMove = this.todoList.complete.indexOf(item);
+                        toMove = this.todoList.complete.splice(toMove, 1);
+                        this.todoList.task.push(toMove[0]);
+                        this.$set(item, 'status', true);
+                    }
+                })
+            },
+            edit($event) {
+                let node = $event.target.nextElementSibling.nextElementSibling;
+                node.setAttribute('class', 'active');
+                node.focus();
+            },
+            editConfirm(key, $event) {
+                let input = $event.target;
+                if (input.value === '') throw 'You must type something.';
+
+                firebase.database().ref().child('todolist/' + key).update({
+                    content: input.value
+                })
+
+                this.todoList.task.forEach((item, index) => {
+                    if (item.key === key) {
+                        this.$set(item, 'content', input.value);
+                    }
+                })
+
+
+                input.setAttribute('class', 'editInput');
+
+            },
+            editCancel($event) {
+                let input = $event.target;
+                input.setAttribute('class', 'editInput');
+            }
+        }
+    });
+}
