@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+html(lang="ko-KR")
+
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    title Learn Vue
+
+    link(rel="shortcut icon" type="image/x-icon" href="assets/favicon.png")
+    link(rel="stylesheet" href="css/main.css")
+
+  body
+
+    .project-team.container(v-cloak)
+      .columns
+        .column.is-6.is-offset-3
+          h1.title.is-3 {{ team.name }}
+          ul.team
+            li.message.is-primary.group(v-for="(group, i) in team.group")
+              .message-header
+                span.icon.is-small
+                  i.fa.fa-group(aria-hidden="true")
+                strong.title.is-4 Team {{ i + 1 }}
+              .message-body
+                ul.members
+                  li.member(v-for="(member, n) in group")
+                    .notification.is-info.member-item {{ member }}
+                      button.delete(
+                        type="button"
+                        aria-label="제거"
+                        @click.prevent="excludeMember(i, n, $event)"
+                        @keyup.shift.f2="excludeMember(i, n, $event)"
+                      )
+
+    script(src="lib/jquery.min.js")
+    script(src="lib/vue.js")
+    script(src="js/vue.data.js")
