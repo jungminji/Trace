@@ -14,7 +14,6 @@
         created() {
             this.getList();
         },
-
         data: {
             todoList: {
                 task: [],
@@ -22,11 +21,9 @@
             },
             editable: false
         },
-
         computed: {
 
         },
-
         methods: {
             getList() {
                 // Truncate before fetch todolist
@@ -133,10 +130,7 @@
                         this.$set(item, 'content', input.value);
                     }
                 })
-
-
                 input.setAttribute('class', 'editInput');
-
             },
             editCancel($event) {
                 let input = $event.target;
