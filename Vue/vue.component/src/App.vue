@@ -21,18 +21,23 @@
           option(v-for="co in comp" :value="co.value"  :disabled="!co.value") {{co.text}}
       .column.is-6
         div(:is="applies")
+    .columns
+      .column.is-12
+        AppTasks
 </template>
 
 <script>
 
 import Headline from './components/Headline.vue';
-import Github from './components/Github.vue'
+import Github from './components/Github.vue';
+import AppTasks from './components/AppTasks.vue';
 
 export default {
   name: 'app',
   components: {
     Headline,
-    Github
+    Github,
+    AppTasks,
   },
   watch: {
     selectOpt(){
