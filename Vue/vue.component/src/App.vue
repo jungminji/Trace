@@ -5,37 +5,61 @@
         h1.title.is-3(v-text="subject")
       .column.is-6
         app-subject
+    .columns
+      .column.is-6
+        Headline
+      .column.is-6
+        Github
+          span 아아아
+    .columns
+      .column.is-6
+        div(:is="dynamic_component") ??
+
+    .columns
+      .column.is-6
+        select(v-model="selectOpt")
+          option(v-for="co in comp" :value="co.value"  :disabled="!co.value") {{co.text}}
+      .column.is-6
+        div(:is="applies")
 </template>
 
 <script>
-import Vue from 'vue'
 
-// Vue.component('app-subject', {
-//   template: `
-//     <div class="compoent-root">
-//       <h3> {{subject}} </h3>
-//     </div>
-//   `,
-//   data(){
-//     return {
-//     subject: 'Vue Component!'
-//     }
-//   }
-// });
-console.log(!!Vue.component('app-subject'));
+import Headline from './components/Headline.vue';
+import Github from './components/Github.vue'
 
 export default {
   name: 'app',
+  components: {
+    Headline,
+    Github
+  },
+  watch: {
+    selectOpt(){
+      console.log(this.selectOpt);
+      if(this.selectOpt=== 'one'){
+        this.applies = 'Headline'
+      } else {
+        this.applies = 'Github'
+      }
+    }
+  },
   data () {
     return {
       subject: 'Vue Component Practice',
+      dynamic_component : 'Github',
+      selectOpt: '',
+      comp: [
+        {text: 'Select', value: ''},
+        {text: 'one', value: 'one'},
+        {text: 'two', value: 'two'},
+      ],
+      applies : 'Github'
     }
   },
   mounted(){
-    console.log(!!Vue.component('app-subject'));
-    let appSubject = Vue.component('app-subject');
-    console.log(typeof appSubject);
-  }
+    window.setTimeout( () => this.dynamic_component = 'Headline', 3000);
+  },
 }
 </script>
 

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 
+
 Vue.component('app-subject', {
   template: `
     <div class="compoent-root">
@@ -16,5 +17,14 @@ Vue.component('app-subject', {
 
 new Vue({
   el: '#app',
+  // components: {
+  //   'app-subject' : {
+  //     name: 'App Component',
+  //     template: ``,
+  //     data(){
+
+  //     }
+  //   }
+  // },
   render: h => h(App)
 });
