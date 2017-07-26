@@ -10,26 +10,22 @@ export default {
     initValue: {
       type: Number,
       default: 0
-    }
+    },
+    index: Number
   },
   data(){
     return {
       count: this.initValue
     };
   },
-  computed:{
-    displayCount(){
-      return this.count;
-    }
-  },
   methods:{
     increaseCount(){
       this.count++;
-      this.$emit('increse');
+      this.$emit('increase', this.index, this.count);
     },
     decreaseCount(){
       this.count--;
-      this.$emit('decrease');
+      this.$emit('decrease', this.index, this.count);
     },
     resetCount(){
       this.count = this.initValue

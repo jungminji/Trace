@@ -7,6 +7,10 @@
     .columns
       .column.is-10.is-offset-1
         //- Count
+        TotalCounter(:counters="counters")
+        br
+        br
+        br
         TotalCounter
 </template>
 
@@ -27,7 +31,7 @@ export default {
   },
   data(){
     return {
-
+      counters: [1,0,3,5,6]
     }
   },
 }
