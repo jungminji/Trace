@@ -38,7 +38,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.vue'],  // import 시 확장자 생략 가능
+    extensions: ['.js','.vue'],  // import 시 확장자 생략 가능
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     }

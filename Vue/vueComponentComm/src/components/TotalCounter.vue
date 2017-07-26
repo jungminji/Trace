@@ -6,7 +6,8 @@
             :index="index"
             :init-value="counter"
             @increase="detect"
-            @decrease="detect")
+            @decrease="detect"
+            @click.native="detectAppEvent")
  </template>
 
 <script>
@@ -17,13 +18,20 @@ export default {
     Counter,
   },
   props: {
+    appMood: {
+      type: String,
+      required: false,
+      default() {
+        return 'Angry';
+      }
+    },
     counters: {
       type: Array,
       required: false,
       default(){
         return [0, 0];
       }
-    }
+    },
   },
   computed:{
     calculateTotal(){
@@ -39,6 +47,10 @@ export default {
   methods:{
   detect(index, count){
     this.copiedCounters.splice(index, 1, count);
+  },
+  detectAppEvent(){
+    console.log('Clicked!');
+    console.log(arguments);
   }
 }
 }
