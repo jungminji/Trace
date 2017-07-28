@@ -1,20 +1,19 @@
 <template lang="pug">
 
-  .columns(v-if="isVisible")
-    .column.is-8.is-offset-2
-      div(:class="msgStatus").message
-        .message-header
-          slot(name="headline")
-            p {{ heading }}
-          slot(name="heading" message="Pass this msg to props")
+  transition(:name="animeType")
+    .columns(v-if="isVisible")
+      .column.is-8.is-offset-2
+        div(:class="msgStatus").message
+          .message-header
+            slot(name="headline")
+              p {{ heading }}
+            slot(name="heading" message="Pass this msg to props")
 
-          button(@click="closeMsg").delete(aria-label="close message")
-        .message-body
-          slot
-            p Default Message.
-
-        
-
+            button(@click="closeMsg").delete(aria-label="close message")
+          .message-body
+            slot
+              p Default Message.
+              
 </template>
 
 <script>
@@ -28,6 +27,10 @@ export default {
     msgStatus: {
       type: String,
       default: 'is-primary'
+    },
+    animeType: {
+      type: String,
+      default: ''
     }
   },
   data(){

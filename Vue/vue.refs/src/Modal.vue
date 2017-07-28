@@ -1,11 +1,12 @@
 <template lang="pug">
-.modal(v-if="display" class="is-active")
-  .modal-background(@click="closeModal")
-  .modal-content.box
-    slot
-      | Default Modal Content.
-  button.modal-close(@click="closeModal"
-  :aria-label="closeModalMsg")
+  transition(name="slide")
+    .modal(v-if="display" class="is-active")
+      .modal-background(@click="closeModal")
+      .modal-content.box
+        slot
+          | Default Modal Content.
+      button.modal-close(@click="closeModal"
+      :aria-label="closeModalMsg")                                
 </template>
 
 <script>
